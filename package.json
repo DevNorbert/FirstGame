@@ -17,7 +17,7 @@
     "build-dev:sass": "node-sass --output-style expanded --source-map true -o css sass",
     "watch": "npm-run-all build -p watch:*",
     "watch:sassprefixer": "onchange -d 100 sass/*.scss -- npm run build-dev:sass -- npm run build:autoprefixer",
-    "watch:browsersync": "browser-sync start --server --port 5000 --files 'css/*.css' '*.html'"
+    "watch:browsersync": "browser-sync start --server --port 5000 --files 'css/*.css' '*.html' 'js/*.js'"
   },
   "keywords": [],
   "author": "",

@@ -1,0 +1,31 @@
+/* Variables */
+$silver: #ecf0f1;
+$green: #27ae60;
+$white: #fff;
+$midnightblue: #2c3e50;
+/* Body */
+body {
+    background-color: $silver;
+}
+/* Content */
+.buttons {
+    text-align: center;
+    margin: 50px 0;
+    .btn {
+        background-color: $green;
+        color: $white;
+        padding: 15px 40px;
+        border: 0;
+        border-radius: 5px;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        &:hover {
+            background-color: $midnightblue;
+            transition-duration: 0.8s;
+        }
+    }
+}
+#output {
+    text-align: center;
+}
