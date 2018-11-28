@@ -8,60 +8,73 @@ var buttonPaper = document.getElementById('paper');
 var buttonStone = document.getElementById('stone');
 var buttonShears = document.getElementById('shears');
 
-buttonPaper.addEventListener('click', function(){
+buttonPaper.addEventListener('click', function () {
     var move = 'paper';
     playerMove(move);
 });
-buttonStone.addEventListener('click', function(){
+buttonStone.addEventListener('click', function () {
     var move = 'stone';
     playerMove(move);
 });
-buttonShears.addEventListener('click', function(){
+buttonShears.addEventListener('click', function () {
     var move = 'shears';
     playerMove(move);
 });
 
-// Function PlayerMove 
-function playerMove(move){
+// Function RandomNumber
+function randomNumber() {
     var random = Math.floor(Math.random() * 3 + 1);
-    var playerMove = move;
+    return random;
+};
+
+// Function ResultGame
+function resultGame(playerMove, random) {
+    var playerMove = playerMove;
+    var random = random;
     // computerMove = paper
     if (random === 1) {
         var computerMove = 'paper';
         // playerMove = stone
-        if (playerMove === 'stone'){
+        if (playerMove === 'stone') {
             output.innerHTML = 'YOU LOST: you played ' + playerMove + ', computer played ' + computerMove;
-        // playerMove = shears
-        } else if (playerMove === 'shears'){
+            // playerMove = shears
+        } else if (playerMove === 'shears') {
             output.innerHTML = 'YOU WON: you played ' + playerMove + ', computer played ' + computerMove;
-        // playerMove = paper
+            // playerMove = paper
         } else {
             output.innerHTML = 'REMIS: you played ' + playerMove + ', computer played ' + computerMove;
         }
-    // computerMove = stone
-    } else if (random === 2){
+        // computerMove = stone
+    } else if (random === 2) {
         var computerMove = 'stone';
         // playerMove = shears
-        if (playerMove === 'shears'){
+        if (playerMove === 'shears') {
             output.innerHTML = 'YOU LOST: you played ' + playerMove + ', computer played ' + computerMove;
-        // playerMove = paper
-        } else if (playerMove === 'paper'){
+            // playerMove = paper
+        } else if (playerMove === 'paper') {
             output.innerHTML = 'YOU WON: you played ' + playerMove + ', computer played ' + computerMove;
-        // playerMove = stone 
+            // playerMove = stone 
         } else {
             output.innerHTML = 'REMIS: you played ' + playerMove + ', computer played ' + computerMove;
         }
     } else {
         var computerMove = 'shears';
         // playerMove = paper
-        if (playerMove === 'paper'){
+        if (playerMove === 'paper') {
             output.innerHTML = 'YOU LOST: you played ' + playerMove + ', computer played ' + computerMove;
-        // playerMove = stone
-        } else if (playerMove === 'stone'){
+            // playerMove = stone
+        } else if (playerMove === 'stone') {
             output.innerHTML = 'YOU WON: you played ' + playerMove + ', computer played ' + computerMove;
-        // playerMove = shears
+            // playerMove = shears
         } else {
             output.innerHTML = 'REMIS: you played ' + playerMove + ', computer played ' + computerMove;
         }
     }
+}
+
+// Function PlayerMove 
+function playerMove(move) {
+    var random = randomNumber();
+    var playerMove = move;
+    resultGame(playerMove, random);
 };
