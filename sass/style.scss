@@ -22,14 +22,19 @@ body {
         cursor: pointer;
         &:hover {
             background-color: $midnightblue;
-            transition-duration: 0.8s;
+            transition-duration: 0.4s;
         }
     }
+    .btn-game {
+        visibility: hidden;
+    }
+    #new-game {
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 20px;
+    } 
 }
-#output {
-    text-align: center;
-}
-#result {
+.output {
     text-align: center;
     margin-bottom: 10px;
 }

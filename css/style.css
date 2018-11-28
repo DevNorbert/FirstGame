@@ -23,14 +23,20 @@ body {
 
 .buttons .btn:hover {
   background-color: #2c3e50;
-  transition-duration: 0.8s;
+  transition-duration: 0.4s;
 }
 
-#output {
-  text-align: center;
+.buttons .btn-game {
+  visibility: hidden;
 }
 
-#result {
+.buttons #new-game {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.output {
   text-align: center;
   margin-bottom: 10px;
 }
