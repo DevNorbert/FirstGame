@@ -66,57 +66,31 @@ function StartGame() {
     };
     // Function resultRound 
     function resultRound(playerMove, computerMove) {
-        switch(true) {
-            // computerMove = paper
-            case computerMove === 'paper' && playerMove === 'stone':
+        switch (computerMove + "-" + playerMove) {
+            // Player Lost
+            case 'paper-stone':
+            case 'stone-shears':
+            case 'shears-paper':
                 var winnerStatus = 'lost';
                 output.innerHTML = winnerGame(playerMove, computerMove, winnerStatus);
                 winner = 'Computer';
                 break;
-            case computerMove === 'paper' && playerMove === 'shears':
+                // Player Win
+            case 'paper-shears':
+            case 'stone-paper':
+            case 'shears-stone':
                 var winnerStatus = 'win';
                 output.innerHTML = winnerGame(playerMove, computerMove, winnerStatus);
                 winner = 'Player';
                 break;
-            case computerMove === playerMove:
-                var winnerStatus = 'remis';
-                output.innerHTML = winnerGame(playerMove, computerMove, winnerStatus);
-                winner = 'Remis';
-                break;
-                // computerMove = stone
-            case computerMove === 'stone' && playerMove === 'shears':
-                var winnerStatus = 'lost';
-                output.innerHTML = winnerGame(playerMove, computerMove, winnerStatus);
-                winner = 'Computer';
-                break;
-            case computerMove === 'stone' && playerMove === 'paper':
-                var winnerStatus = 'win';
-                output.innerHTML = winnerGame(playerMove, computerMove, winnerStatus);
-                winner = 'Player';
-                break;
-            case computerMove === playerMove:
-                var winnerStatus = 'remis';
-                output.innerHTML = winnerGame(playerMove, computerMove, winnerStatus);
-                winner = 'Remis';
-                break;
-                // computerMove = shears
-            case computerMove === 'shears' && playerMove === 'paper':
-                var winnerStatus = 'lost';
-                output.innerHTML = winnerGame(playerMove, computerMove, winnerStatus);
-                winner = 'Computer';
-                break;
-            case computerMove === 'shears' && playerMove === 'stone':
-                var winnerStatus = 'win';
-                output.innerHTML = winnerGame(playerMove, computerMove, winnerStatus);
-                winner = 'Player';
-                break;
-            case computerMove === playerMove:
+                // Remis
+            default:
                 var winnerStatus = 'remis';
                 output.innerHTML = winnerGame(playerMove, computerMove, winnerStatus);
                 winner = 'Remis';
                 break;
         }
-    }
+    };
     // Function ResultGame
     function resultGame(playerMove, random) {
         var playerMove = playerMove;
