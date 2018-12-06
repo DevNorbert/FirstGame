@@ -112,32 +112,21 @@ function StartGame() {
             winComputer = 0;
         }
     };
-    // Function whoWin
-    function whoWin() {
-        if (winner === 'Player') {
-            return 'Player: ' + (++winPlayer) + ' - Computer: ' + winComputer;
-        } else if (winner === 'Computer') {
-            return 'Player: ' + winPlayer + ' - Computer: ' + (++winComputer);
-            // Remis
-        } else if (winner === 'Remis') {
-            return 'Player: ' + winPlayer + ' - Computer ' + winComputer;
-        }
-    }
     //Function WonRounds
     function wonRounds() {
         if (!gameEnd) {
             switch (winner) {
                 // Player Win
                 case 'Player':
-                    result.innerHTML = whoWin();
+                    result.innerHTML = 'Player: ' + (++winPlayer) + ' - Computer: ' + winComputer;
                     break;
                     // Computer Win
                 case 'Computer':
-                    result.innerHTML = whoWin();
+                    result.innerHTML = 'Player: ' + winPlayer + ' - Computer: ' + (++winComputer);
                     break;
                     // Remis
                 case 'Remis':
-                    result.innerHTML = whoWin();
+                    result.innerHTML = 'Player: ' + winPlayer + ' - Computer ' + winComputer;
                     break;
             }
         } else {
