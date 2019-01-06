@@ -11,24 +11,16 @@ function StartGame() {
     var rounds;
     var gameEnd = false;
     // Buttons
-    var buttonPaper = document.getElementById('paper');
-    var buttonStone = document.getElementById('stone');
-    var buttonShears = document.getElementById('shears');
     var buttonNewGame = document.getElementById('new-game');
+    var buttonsMove = document.querySelectorAll('.player-move');
 
+    for (var i = 0; i < buttonsMove.length; i++) {
+        buttonsMove[i].addEventListener('click', function () {
+            var move = this.getAttribute('data-move');
+            playerMove(move)
+        });
+    };
 
-    buttonPaper.addEventListener('click', function () {
-        var move = 'paper';
-        playerMove(move);
-    });
-    buttonStone.addEventListener('click', function () {
-        var move = 'stone';
-        playerMove(move);
-    });
-    buttonShears.addEventListener('click', function () {
-        var move = 'shears';
-        playerMove(move);
-    });
     buttonNewGame.addEventListener('click', function () {
         var number = prompt('How many rounds?');
         var numberRounds = parseFloat(number);
@@ -41,9 +33,10 @@ function StartGame() {
         } else {
             output.innerHTML = '';
             newGame(numberRounds);
-            buttonPaper.style.visibility = 'visible';
-            buttonStone.style.visibility = 'visible';
-            buttonShears.style.visibility = 'visible';
+
+            for(var i = 0; i < buttonsMove.length; i++){
+            buttonsMove[i].style.visibility = 'visible';
+            }
         }
     });
 

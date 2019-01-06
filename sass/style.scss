@@ -3,14 +3,17 @@ $silver: #ecf0f1;
 $green: #27ae60;
 $white: #fff;
 $midnightblue: #2c3e50;
+
 /* Body */
 body {
     background-color: $silver;
 }
+
 /* Content */
 .buttons {
     text-align: center;
     margin: 50px 0;
+
     .btn {
         background-color: $green;
         color: $white;
@@ -20,20 +23,24 @@ body {
         font-size: 18px;
         font-weight: 700;
         cursor: pointer;
+
         &:hover {
             background-color: $midnightblue;
             transition-duration: 0.4s;
         }
     }
+
     .btn-game {
         visibility: hidden;
     }
+
     #new-game {
         display: block;
         margin: 0 auto;
         margin-bottom: 20px;
-    } 
+    }
 }
+
 .output {
     text-align: center;
     margin-bottom: 10px;
