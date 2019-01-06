@@ -5,11 +5,15 @@ function StartGame() {
     var output = document.getElementById('output');
     var result = document.getElementById('result');
     var outputRounds = document.getElementById('rounds');
-    var winner;
-    var winPlayer = 0;
-    var winComputer = 0;
-    var rounds;
-    var gameEnd = false;
+
+    var params = {
+        winner: '',
+        winPlayer: 0,
+        winComputer: 0,
+        rounds: '',
+        gameEnd: false,
+    }
+
     // Buttons
     var buttonNewGame = document.getElementById('new-game');
     var buttonsMove = document.querySelectorAll('.player-move');
@@ -66,7 +70,7 @@ function StartGame() {
             case 'shears-paper':
                 var winnerStatus = 'lost';
                 output.innerHTML = winnerGame(playerMove, computerMove, winnerStatus);
-                winner = 'Computer';
+                params.winner = 'Computer';
                 break;
                 // Player Win
             case 'paper-shears':
@@ -74,13 +78,13 @@ function StartGame() {
             case 'shears-stone':
                 var winnerStatus = 'win';
                 output.innerHTML = winnerGame(playerMove, computerMove, winnerStatus);
-                winner = 'Player';
+                params.winner = 'Player';
                 break;
                 // Remis
             default:
                 var winnerStatus = 'remis';
                 output.innerHTML = winnerGame(playerMove, computerMove, winnerStatus);
-                winner = 'Remis';
+                params.winner = 'Remis';
                 break;
         }
     };
@@ -97,56 +101,56 @@ function StartGame() {
             computerMove = 'shears'
         }
         // Check end game
-        if (!gameEnd) {
+        if (!params.gameEnd) {
             resultRound(playerMove, computerMove);
         } else {
             output.innerHTML = 'Game over, please press the new game button!';
-            winPlayer = 0;
-            winComputer = 0;
+            params.winPlayer = 0;
+            params.winComputer = 0;
         }
     };
     //Function WonRounds
     function wonRounds() {
-        if (!gameEnd) {
-            switch (winner) {
+        if (!params.gameEnd) {
+            switch (params.winner) {
                 // Player Win
                 case 'Player':
-                    result.innerHTML = 'Player: ' + (++winPlayer) + ' - Computer: ' + winComputer;
+                    result.innerHTML = 'Player: ' + (++params.winPlayer) + ' - Computer: ' + params.winComputer;
                     break;
                     // Computer Win
                 case 'Computer':
-                    result.innerHTML = 'Player: ' + winPlayer + ' - Computer: ' + (++winComputer);
+                    result.innerHTML = 'Player: ' + params.winPlayer + ' - Computer: ' + (++params.winComputer);
                     break;
                     // Remis
                 case 'Remis':
-                    result.innerHTML = 'Player: ' + winPlayer + ' - Computer ' + winComputer;
+                    result.innerHTML = 'Player: ' + params.winPlayer + ' - Computer ' + params.winComputer;
                     break;
             }
         } else {
-            result.innerHTML = 'Player: ' + winPlayer + ' - Computer: ' + winComputer;
+            result.innerHTML = 'Player: ' + params.winPlayer + ' - Computer: ' + params.winComputer;
         }
     };
     // Function NewGame 
     function newGame(numberRounds) {
-        rounds = numberRounds;
-        outputRounds.innerHTML = 'Number of rounds: ' + rounds;
+        params.rounds = numberRounds;
+        outputRounds.innerHTML = 'Number of rounds: ' + params.rounds;
     };
     // Function EndGame
     function ifEndGame() {
-        if (winPlayer === rounds) {
+        if (params.winPlayer === params.rounds) {
             output.innerHTML = '<br><br>' + 'YOU WON THE ENTIRE GAME';
-            gameEnd = true;
-        } else if (winComputer === rounds) {
+            params.gameEnd = true;
+        } else if (params.winComputer === params.rounds) {
             output.innerHTML = '<br><br>' + 'COMPUTER WON THE ENTIRE GAME';
-            gameEnd = true;
+            params.gameEnd = true;
         }
     };
     // Function resetGame
     function resetGame() {
         buttonNewGame.onclick = function () {
-            winPlayer = 0;
-            winComputer = 0;
-            gameEnd = false;
+            params.winPlayer = 0;
+            params.winComputer = 0;
+            params.gameEnd = false;
             result.innerHTML = '';
         }
     }
