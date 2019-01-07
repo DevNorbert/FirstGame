@@ -3,6 +3,7 @@ $silver: #ecf0f1;
 $green: #27ae60;
 $white: #fff;
 $midnightblue: #2c3e50;
+$backgroundModal: rgba(0, 0, 0, 0.7);
 
 /* Body */
 body {
@@ -44,4 +45,55 @@ body {
 .output {
     text-align: center;
     margin-bottom: 10px;
+}
+
+/* Modals */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $backgroundModal;
+
+    &.show {
+        display: block;
+    }
+
+    .modal {
+        display: none;
+        background-color: $white;
+        width: 30%;
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        transform: translate3d(-50%, -30%, 0);
+
+        &.show {
+            display: block;
+        }
+
+        .close {
+            float: right;
+            padding: 5px 15px;
+            color: $midnightblue;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        header {
+            padding: 15px 15px;
+            color: grey;
+            font-weight: 600;
+            border-bottom: 1px solid grey;
+        }
+        .modal-content {
+            text-align: center;
+            padding: 20px;
+            color: grey;
+            font-size: 18px;
+            font-weight: 500;
+        }
+    }
 }

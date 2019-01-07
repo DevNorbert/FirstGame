@@ -41,4 +41,56 @@ body {
   margin-bottom: 10px;
 }
 
+/* Modals */
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.overlay.show {
+  display: block;
+}
+
+.overlay .modal {
+  display: none;
+  background-color: #fff;
+  width: 30%;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate3d(-50%, -30%, 0);
+}
+
+.overlay .modal.show {
+  display: block;
+}
+
+.overlay .modal .close {
+  float: right;
+  padding: 5px 15px;
+  color: #2c3e50;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.overlay .modal header {
+  padding: 15px 15px;
+  color: grey;
+  font-weight: 600;
+  border-bottom: 1px solid grey;
+}
+
+.overlay .modal .modal-content {
+  text-align: center;
+  padding: 20px;
+  color: grey;
+  font-size: 18px;
+  font-weight: 500;
+}
+
 /*# sourceMappingURL=style.css.map */

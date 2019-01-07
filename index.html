@@ -1,22 +1,36 @@
 <!DOCTYPE html>
 <html lang="pl">
-    <head>
-        <meta charset="utf-8">
-        <title>Piszemy własną grę!</title>
-        <link rel="stylesheet" href="css/style.css">
-    </head>
-    <body>
-        <div class="content">
-            <div class="buttons">
-                <button class="btn" id="new-game">New Game</button>
-                <button class="btn btn-game player-move" id="paper" data-move="paper">Papier</button>
-                <button class="btn btn-game player-move" id="stone" data-move="stone">Kamień</button>
-                <button class="btn btn-game player-move" id="shears" data-move="shears">Nożyce</button>
-            </div>
-            <div class="output" id="rounds"></div>
-            <div class="output" id="result"></div>
-            <div class="output" id="output"></div>
+
+<head>
+    <meta charset="utf-8">
+    <title>Piszemy własną grę!</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="content">
+        <div class="buttons">
+            <button class="btn" id="new-game">New Game</button>
+            <button class="btn btn-game player-move" id="paper" data-move="paper">Papier</button>
+            <button class="btn btn-game player-move" id="stone" data-move="stone">Kamień</button>
+            <button class="btn btn-game player-move" id="shears" data-move="shears">Nożyce</button>
         </div>
-      <script src="js/script.js"></script>  
-    </body>
+        <div class="output" id="rounds"></div>
+        <div class="output" id="result"></div>
+        <div class="output" id="output"></div>
+    </div>
+    <!-- Modals -->
+    <div class="overlay" id="modal-overlay">
+        <!-- Modal One -->
+        <div class="modal" id="modal-endgame">
+            <a href="#" class="close">x</a>
+            <header>Who Win</header>
+            <div class="modal-content">
+                
+            </div>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+
 </html>

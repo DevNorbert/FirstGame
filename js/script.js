@@ -5,7 +5,9 @@ function StartGame() {
     var output = document.getElementById('output');
     var result = document.getElementById('result');
     var outputRounds = document.getElementById('rounds');
-
+    var overlay = document.getElementById('modal-overlay');
+    var modalEndGame = document.getElementById('modal-endgame');
+    var modalContentEndGame = modalEndGame.querySelector(".modal-content");
     var params = {
         winner: '',
         winPlayer: 0,
@@ -38,8 +40,8 @@ function StartGame() {
             output.innerHTML = '';
             newGame(numberRounds);
 
-            for(var i = 0; i < buttonsMove.length; i++){
-            buttonsMove[i].style.visibility = 'visible';
+            for (var i = 0; i < buttonsMove.length; i++) {
+                buttonsMove[i].style.visibility = 'visible';
             }
         }
     });
@@ -104,7 +106,9 @@ function StartGame() {
         if (!params.gameEnd) {
             resultRound(playerMove, computerMove);
         } else {
-            output.innerHTML = 'Game over, please press the new game button!';
+            overlay.classList.add('show');
+            modalEndGame.classList.add('show');
+            modalContentEndGame.innerHTML = 'Game over, please press the new game button!';
             params.winPlayer = 0;
             params.winComputer = 0;
         }
@@ -138,10 +142,14 @@ function StartGame() {
     // Function EndGame
     function ifEndGame() {
         if (params.winPlayer === params.rounds) {
-            output.innerHTML = '<br><br>' + 'YOU WON THE ENTIRE GAME';
+            overlay.classList.add('show');
+            modalEndGame.classList.add('show');
+            modalContentEndGame.innerHTML = 'YOU WON THE ENTIRE GAME';
             params.gameEnd = true;
         } else if (params.winComputer === params.rounds) {
-            output.innerHTML = '<br><br>' + 'COMPUTER WON THE ENTIRE GAME';
+            overlay.classList.add('show');
+            modalEndGame.classList.add('show');
+            modalContentEndGame.innerHTML = 'COMPUTER WON THE ENTIRE GAME';
             params.gameEnd = true;
         }
     };
@@ -164,5 +172,33 @@ function StartGame() {
         resetGame();
 
     };
+    // Function Modal Hide
+
+    var hideModal = function (event) {
+        event.preventDefault();
+        document.querySelector('#modal-overlay').classList.remove('show');
+    }
+
+    var closeButtons = document.querySelectorAll(".modal .close");
+
+    for (var i = 0; i < closeButtons.length; i++) {
+        closeButtons[i].addEventListener('click', hideModal);
+    }
+    // Function Overlay Hide 
+
+    function hideOverlay() {
+
+        document.querySelector('#modal-overlay').addEventListener('click', hideModal);
+
+        var modals = document.querySelectorAll('.modal');
+
+        for (var i = 0; i < modals.length; i++) {
+            modals[i].addEventListener('click', function (event) {
+                event.stopPropagation();
+            });
+        };
+    };
+    hideOverlay();
+
 };
 StartGame();
