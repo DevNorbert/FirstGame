@@ -103,4 +103,15 @@ body {
   font-weight: 500;
 }
 
+.overlay .modal .modal-content .form-group .form-control {
+  padding: 10px 25px;
+  margin: 10px 0;
+}
+
+.overlay .modal .modal-content .form-group .form-alert {
+  display: block;
+  font-size: 14px;
+  color: darkred;
+}
+
 /*# sourceMappingURL=style.css.map */

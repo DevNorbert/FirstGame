@@ -2,13 +2,11 @@
 //Start Game
 function StartGame() {
     // Main Variables
-    var output = document.getElementById('output');
-    var result = document.getElementById('result');
-    var outputRounds = document.getElementById('rounds');
     var outputTable = document.getElementById('output-table');
     var overlay = document.getElementById('modal-overlay');
     var modalEndGame = document.getElementById('modal-endgame');
     var modalContentEndGame = modalEndGame.querySelector(".modal-content");
+    var modalNewGame = document.getElementById('modal-newgame');
     var params = {
         winnerRound: '',
         winnerGame: '',
@@ -20,13 +18,15 @@ function StartGame() {
         random: '',
         rounds: '',
         gameEnd: false,
+        namePlayer: '',
         progress: []
     };
 
     // Buttons
     var buttonNewGame = document.getElementById('new-game');
+    var buttonStartGame = document.getElementById('start-game');
+    var buttonCancelGame = document.getElementById('cancel-game');
     var buttonsMove = document.querySelectorAll('.player-move');
-
     for (var i = 0; i < buttonsMove.length; i++) {
         buttonsMove[i].addEventListener('click', function () {
             params.playerMove = this.getAttribute('data-move');
@@ -35,24 +35,37 @@ function StartGame() {
     };
 
     buttonNewGame.addEventListener('click', function () {
-        var number = prompt('How many rounds?');
+        modalEndGame.classList.remove('show');
+        overlay.classList.add('show');
+        modalNewGame.classList.add('show');
+        params.progress = [];
+    });
+    // Start Game Button
+    buttonStartGame.addEventListener('click', function () {
+        var number = document.getElementById('number-rounds').value;
         var numberRounds = parseFloat(number);
-        if (numberRounds < 0) {
-            output.innerHTML = '';
-            output.innerHTML = 'Please, enter positive number!';
+        params.namePlayer = document.getElementById('name-player').value;
+        var alertName = document.getElementById('alert-name');
+        var alertRounds = document.getElementById('alert-rounds');
+        if (params.namePlayer === '') {
+            alertName.innerHTML = 'Podaj imię';
         } else if (isNaN(numberRounds)) {
-            output.innerHTML = '';
-            output.innerHTML = 'Please, enter number!';
+            alertRounds.innerHTML = 'Podaj ilość rund';
         } else {
-            output.innerHTML = '';
-            newGame(numberRounds);
 
+            newGame(numberRounds);
+            overlay.classList.remove('show');
+            modalNewGame.classList.remove('show');
             for (var i = 0; i < buttonsMove.length; i++) {
                 buttonsMove[i].style.visibility = 'visible';
             }
         }
     });
-
+    // Cancel Button 
+    buttonCancelGame.addEventListener('click', function(){
+        overlay.classList.remove('show');
+        modalNewGame.classList.remove('show');
+    });
     // Function RandomNumber
     function randomNumber() {
         return Math.floor(Math.random() * 3 + 1);
@@ -67,7 +80,7 @@ function StartGame() {
             case 'shears-paper':
                 params.winnerStatus = 'lost';
                 params.winner = 'Computer';
-                params.winnerGame = 'YOU LOST';
+                params.winnerGame = params.namePlayer + ' LOST';
                 break;
                 // Player Win
             case 'paper-shears':
@@ -75,7 +88,7 @@ function StartGame() {
             case 'shears-stone':
                 params.winnerStatus = 'win';
                 params.winner = 'Player';
-                params.winnerGame = 'YOU WON';
+                params.winnerGame = params.namePlayer + ' WON';
                 break;
                 // Remis
             default:
@@ -112,19 +125,19 @@ function StartGame() {
             switch (params.winner) {
                 // Player Win
                 case 'Player':
-                    params.winnerRound = 'Player: ' + (++params.winPlayer) + ' - Computer: ' + params.winComputer;
+                    params.winnerRound = params.namePlayer + ' ' + (++params.winPlayer) + ' - Computer: ' + params.winComputer;
                     break;
                     // Computer Win
                 case 'Computer':
-                    params.winnerRound = 'Player: ' + params.winPlayer + ' - Computer: ' + (++params.winComputer);
+                    params.winnerRound = params.namePlayer + ' ' + params.winPlayer + ' - Computer: ' + (++params.winComputer);
                     break;
                     // Remis
                 case 'Remis':
-                    params.winnerRound  = 'Player: ' + params.winPlayer + ' - Computer ' + params.winComputer;
+                    params.winnerRound = params.namePlayer + ' ' + params.winPlayer + ' - Computer ' + params.winComputer;
                     break;
             }
         } else {
-            params.winnerRound = 'Player: ' + params.winPlayer + ' - Computer: ' + params.winComputer;
+            params.winnerRound = params.namePlayer + ' ' + params.winPlayer + ' - Computer: ' + params.winComputer;
         }
     };
     // Function NewGame 
@@ -138,12 +151,12 @@ function StartGame() {
         if (params.winPlayer === params.rounds) {
             overlay.classList.add('show');
             modalEndGame.classList.add('show');
-            modalContentEndGame.innerHTML = 'YOU WON THE ENTIRE GAME';
+            modalContentEndGame.innerHTML = params.namePlayer + ' won the entire game';
             params.gameEnd = true;
         } else if (params.winComputer === params.rounds) {
             overlay.classList.add('show');
             modalEndGame.classList.add('show');
-            modalContentEndGame.innerHTML = 'COMPUTER WON THE ENTIRE GAME';
+            modalContentEndGame.innerHTML = 'Computer won the entire game';
             params.gameEnd = true;
         }
     };
@@ -153,7 +166,6 @@ function StartGame() {
             params.winPlayer = 0;
             params.winComputer = 0;
             params.gameEnd = false;
-            result.innerHTML = '';
         }
     }
     // Function PlayerMove 
@@ -182,13 +194,13 @@ function StartGame() {
         var tableNumberRounds = '<tr><th>Liczba Rund</th><th>' + params.progress[0].rounds + '</th></tr>';
         var tablePlayerMove = '<tr><th>Ruch Gracza</th><th>' + params.progress[0].playerMove + '</th></tr>';
         var tableComputerMove = '<tr><th>Ruch Komputera</th><th>' + params.progress[0].computerMove + '</th></tr>';
-        var tableScoreRound = '<tr><th>Wynik Rundy</th><th>' + params.progress[0].winnerGame+ '</th></tr>';
+        var tableScoreRound = '<tr><th>Wynik Rundy</th><th>' + params.progress[0].winnerGame + '</th></tr>';
         var tableScoreThisRound = '<tr><th>Wynik gry po tej rundzie</th><th>' + params.progress[0].winnerRound + '</th></tr>';
 
         var table = '<table class="table-game"><tbody>' + tableNumberRounds + tablePlayerMove + tableComputerMove + tableScoreRound + tableScoreThisRound + '</tbody></table>';
         outputTable.innerHTML = table;
 
-        if(params.gameEnd === true){
+        if (params.gameEnd === true) {
             modalContentEndGame.innerHTML += table;
         }
     }

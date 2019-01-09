@@ -15,14 +15,30 @@
             <button class="btn btn-game player-move" id="stone" data-move="stone">Kamień</button>
             <button class="btn btn-game player-move" id="shears" data-move="shears">Nożyce</button>
         </div>
-        <div class="output" id="rounds"></div>
-        <div class="output" id="result"></div>
-        <div class="output" id="output"></div>
         <div id="output-table"></div>
     </div>
     <!-- Modals -->
     <div class="overlay" id="modal-overlay">
-        <!-- Modal One -->
+        <!-- Modal New Game -->
+        <div class="modal" id="modal-newgame">
+            <a href="#" class="close">x</a>
+            <header>New Game</header>
+            <div class="modal-content">
+                <div class="form-group">
+                    <input type="text" id="name-player" class="form-control" placeholder="Your Name">
+                    <span class="form-alert" id="alert-name"></span>
+                </div>
+                <div class="form-group">
+                    <input type="number" id="number-rounds" class="form-control" placeholder="Ilość rund">
+                    <span class="form-alert" id="alert-rounds"></span>
+                </div>
+                <div class="buttons">
+                    <button class="btn" id="cancel-game">Cancel</button>
+                    <button class="btn" id="start-game">Start</button>
+                </div>
+            </div>
+        </div>
+        <!-- Modal End Game -->
         <div class="modal" id="modal-endgame">
             <a href="#" class="close">x</a>
             <header>Who Win</header>
