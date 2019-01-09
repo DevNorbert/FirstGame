@@ -41,6 +41,16 @@ body {
   margin-bottom: 10px;
 }
 
+.table-game {
+  margin: 15px auto;
+}
+
+.table-game th {
+  border: 1px solid #2c3e50;
+  padding: 5px 10px;
+  width: 200px;
+}
+
 /* Modals */
 .overlay {
   display: none;

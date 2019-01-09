@@ -5,16 +5,23 @@ function StartGame() {
     var output = document.getElementById('output');
     var result = document.getElementById('result');
     var outputRounds = document.getElementById('rounds');
+    var outputTable = document.getElementById('output-table');
     var overlay = document.getElementById('modal-overlay');
     var modalEndGame = document.getElementById('modal-endgame');
     var modalContentEndGame = modalEndGame.querySelector(".modal-content");
     var params = {
-        winner: '',
+        winnerRound: '',
+        winnerGame: '',
         winPlayer: 0,
         winComputer: 0,
+        playerMove: '',
+        computerMove: '',
+        winnerStatus: '',
+        random: '',
         rounds: '',
         gameEnd: false,
-    }
+        progress: []
+    };
 
     // Buttons
     var buttonNewGame = document.getElementById('new-game');
@@ -22,8 +29,8 @@ function StartGame() {
 
     for (var i = 0; i < buttonsMove.length; i++) {
         buttonsMove[i].addEventListener('click', function () {
-            var move = this.getAttribute('data-move');
-            playerMove(move)
+            params.playerMove = this.getAttribute('data-move');
+            playerMove();
         });
     };
 
@@ -50,61 +57,47 @@ function StartGame() {
     function randomNumber() {
         return Math.floor(Math.random() * 3 + 1);
     };
-    // Function WinnerGame
-    function winnerGame(playerMove, computerMove, winnerStatus) {
-        var playerMove = playerMove;
-        var computerMove = computerMove;
-        var winnerStatus = winnerStatus;
-        if (winnerStatus === 'lost') {
-            return 'YOU LOST: you played ' + playerMove + ', computer played ' + computerMove;
-        } else if (winnerStatus === 'win') {
-            return 'YOU WON: you played ' + playerMove + ', computer played ' + computerMove;
-        } else if (winnerStatus === 'remis') {
-            return 'REMIS: you played ' + playerMove + ', computer played ' + computerMove;
-        }
-    };
+
     // Function resultRound 
-    function resultRound(playerMove, computerMove) {
-        switch (computerMove + "-" + playerMove) {
+    function resultRound() {
+        switch (params.computerMove + "-" + params.playerMove) {
             // Player Lost
             case 'paper-stone':
             case 'stone-shears':
             case 'shears-paper':
-                var winnerStatus = 'lost';
-                output.innerHTML = winnerGame(playerMove, computerMove, winnerStatus);
+                params.winnerStatus = 'lost';
                 params.winner = 'Computer';
+                params.winnerGame = 'YOU LOST';
                 break;
                 // Player Win
             case 'paper-shears':
             case 'stone-paper':
             case 'shears-stone':
-                var winnerStatus = 'win';
-                output.innerHTML = winnerGame(playerMove, computerMove, winnerStatus);
+                params.winnerStatus = 'win';
                 params.winner = 'Player';
+                params.winnerGame = 'YOU WON';
                 break;
                 // Remis
             default:
-                var winnerStatus = 'remis';
-                output.innerHTML = winnerGame(playerMove, computerMove, winnerStatus);
+                params.winnerStatus = 'remis';
                 params.winner = 'Remis';
+                params.winnerGame = 'REMIS';
                 break;
         }
     };
     // Function ResultGame
-    function resultGame(playerMove, random) {
-        var playerMove = playerMove;
-        var random = random;
-        var computerMove;
-        if (random === 1) {
-            computerMove = 'paper';
-        } else if (random === 2) {
-            computerMove = 'stone'
+    function resultGame() {
+        if (params.random === 1) {
+            params.computerMove = 'paper';
+        } else if (params.random === 2) {
+            params.computerMove = 'stone'
         } else {
-            computerMove = 'shears'
+            params.computerMove = 'shears'
         }
+
         // Check end game
         if (!params.gameEnd) {
-            resultRound(playerMove, computerMove);
+            resultRound();
         } else {
             overlay.classList.add('show');
             modalEndGame.classList.add('show');
@@ -119,25 +112,26 @@ function StartGame() {
             switch (params.winner) {
                 // Player Win
                 case 'Player':
-                    result.innerHTML = 'Player: ' + (++params.winPlayer) + ' - Computer: ' + params.winComputer;
+                    params.winnerRound = 'Player: ' + (++params.winPlayer) + ' - Computer: ' + params.winComputer;
                     break;
                     // Computer Win
                 case 'Computer':
-                    result.innerHTML = 'Player: ' + params.winPlayer + ' - Computer: ' + (++params.winComputer);
+                    params.winnerRound = 'Player: ' + params.winPlayer + ' - Computer: ' + (++params.winComputer);
                     break;
                     // Remis
                 case 'Remis':
-                    result.innerHTML = 'Player: ' + params.winPlayer + ' - Computer ' + params.winComputer;
+                    params.winnerRound  = 'Player: ' + params.winPlayer + ' - Computer ' + params.winComputer;
                     break;
             }
         } else {
-            result.innerHTML = 'Player: ' + params.winPlayer + ' - Computer: ' + params.winComputer;
+            params.winnerRound = 'Player: ' + params.winPlayer + ' - Computer: ' + params.winComputer;
         }
     };
     // Function NewGame 
     function newGame(numberRounds) {
+        outputTable.innerHTML = '';
+        params.progress = [];
         params.rounds = numberRounds;
-        outputRounds.innerHTML = 'Number of rounds: ' + params.rounds;
     };
     // Function EndGame
     function ifEndGame() {
@@ -163,17 +157,43 @@ function StartGame() {
         }
     }
     // Function PlayerMove 
-    function playerMove(move) {
-        var random = randomNumber();
-        var playerMove = move;
-        resultGame(playerMove, random);
+    function playerMove() {
+        params.random = randomNumber();
+        resultGame();
         wonRounds();
         ifEndGame();
         resetGame();
 
-    };
-    // Function Modal Hide
+        params.progress = [];
+        params.progress.push({
+            'playerMove': params.playerMove,
+            'computerMove': params.computerMove,
+            'rounds': params.rounds,
+            'winnerGame': params.winnerGame,
+            'winnerRound': params.winnerRound,
+            'scorePlayer': params.winPlayer,
+            'scoreComputer': params.winComputer,
 
+        });
+        scoreTable();
+    };
+    // Function Generate Score Table 
+    function scoreTable() {
+        var tableNumberRounds = '<tr><th>Liczba Rund</th><th>' + params.progress[0].rounds + '</th></tr>';
+        var tablePlayerMove = '<tr><th>Ruch Gracza</th><th>' + params.progress[0].playerMove + '</th></tr>';
+        var tableComputerMove = '<tr><th>Ruch Komputera</th><th>' + params.progress[0].computerMove + '</th></tr>';
+        var tableScoreRound = '<tr><th>Wynik Rundy</th><th>' + params.progress[0].winnerGame+ '</th></tr>';
+        var tableScoreThisRound = '<tr><th>Wynik gry po tej rundzie</th><th>' + params.progress[0].winnerRound + '</th></tr>';
+
+        var table = '<table class="table-game"><tbody>' + tableNumberRounds + tablePlayerMove + tableComputerMove + tableScoreRound + tableScoreThisRound + '</tbody></table>';
+        outputTable.innerHTML = table;
+
+        if(params.gameEnd === true){
+            modalContentEndGame.innerHTML += table;
+        }
+    }
+
+    // Function Modal Hide
     var hideModal = function (event) {
         event.preventDefault();
         document.querySelector('#modal-overlay').classList.remove('show');
@@ -185,7 +205,6 @@ function StartGame() {
         closeButtons[i].addEventListener('click', hideModal);
     }
     // Function Overlay Hide 
-
     function hideOverlay() {
 
         document.querySelector('#modal-overlay').addEventListener('click', hideModal);
