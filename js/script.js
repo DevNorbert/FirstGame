@@ -39,6 +39,7 @@ function StartGame() {
         overlay.classList.add('show');
         modalNewGame.classList.add('show');
         params.progress = [];
+        outputTable.innerHTML = '';
     });
     // Start Game Button
     buttonStartGame.addEventListener('click', function () {
@@ -51,6 +52,10 @@ function StartGame() {
             alertName.innerHTML = 'Podaj imię';
         } else if (isNaN(numberRounds)) {
             alertRounds.innerHTML = 'Podaj ilość rund';
+        } else if (numberRounds === 0) {
+            alertRounds.innerHTML = 'Ilość rund musi być większa od 0';
+        } else if (numberRounds < 0) {
+            alertRounds.innerHTML = 'Ilość rund musi być wartością dodatnią';
         } else {
 
             newGame(numberRounds);
@@ -62,9 +67,14 @@ function StartGame() {
         }
     });
     // Cancel Button 
-    buttonCancelGame.addEventListener('click', function(){
+    buttonCancelGame.addEventListener('click', function () {
         overlay.classList.remove('show');
         modalNewGame.classList.remove('show');
+        params.progress = [];
+        outputTable.innerHTML = '';
+        for (var i = 0; i < buttonsMove.length; i++) {
+            buttonsMove[i].style.visibility = 'hidden';
+        }
     });
     // Function RandomNumber
     function randomNumber() {
